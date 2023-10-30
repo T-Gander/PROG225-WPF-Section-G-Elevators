@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -38,6 +39,18 @@ namespace WPF_Section_G
             //Grid.SetRow(E1.Border, Grid.GetRow(E1.Border));
             //E1.Floor.Content = "Floor 1";
 
+            Timer HeartbeatTimer = new Timer();
+            HeartbeatTimer.Interval = 1000;
+            HeartbeatTimer.Enabled = true;
+            HeartbeatTimer.Elapsed += HeartbeatTimer_Elapsed;
+        }
+
+        private void HeartbeatTimer_Elapsed(object? sender, ElapsedEventArgs e)
+        {
+            if(Heartbeat != null)
+            {
+                Heartbeat.Invoke();
+            }
         }
     }
 }

@@ -49,12 +49,17 @@ namespace Section_G_Lab_Elevator
 
         protected void FillElevator()
         {
-
+            if (occupantsWaiting == 0) loadingOccupants = false;
+            else occupantsWaiting--; occupants++;
         }
 
         protected void EmptyElevator()
         {
-
+            occupants--;
+        }
+        protected void UpdateVisualLocation(int direction)
+        {
+            Grid.SetRow(Border, Grid.GetRow(Border) + direction);
         }
 
         protected void CheckState()
@@ -70,14 +75,21 @@ namespace Section_G_Lab_Elevator
             else if (unLoadingOccupants)
             {
                 if (occupants != 0) EmptyElevator();
-                else unLoadingOccupants = false;
             }
         }
 
         protected void MoveToDestinationFloor()
         {
-            if (Destination < Location) Location--;
-            else if (Destination > Location) Location++;
+            if (Destination < Location)
+            {
+                Location--;
+                UpdateVisualLocation(-1);
+            }
+            else if (Destination > Location)
+            {
+                Location++;
+                UpdateVisualLocation(1);
+            }
             else unLoadingOccupants = true;
         }
 
@@ -131,13 +143,11 @@ namespace Section_G_Lab_Elevator
             return occupantsWaiting;
         }
 
-        protected void AddOccupants()
+        protected int AddOccupants()
         {
-            int peopleWaiting = 0;
-
             Random rWaiting = new Random();
 
-            rWaiting.Next(MAXCAPACITY);
+            return rWaiting.Next(MAXCAPACITY);
         }
 
         protected Floors GenerateRandomFloor()
