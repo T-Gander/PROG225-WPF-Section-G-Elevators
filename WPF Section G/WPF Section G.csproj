@@ -2,10 +2,16 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <RootNamespace>WPF_Section_G</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Section_G_Lab_Elevator">
+      <HintPath>dll\Section_G_Lab_Elevator.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

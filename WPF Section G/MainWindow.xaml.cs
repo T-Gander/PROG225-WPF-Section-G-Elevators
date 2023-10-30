@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Section_G_Lab_Elevator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,19 +21,23 @@ namespace WPF_Section_G
     /// </summary>
     public partial class MainWindow : Window
     {
+        public delegate void ElevatorHeartbeat();
+        public static event ElevatorHeartbeat Heartbeat;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            Elevator E1 = new LowElevator(lblE1, lblFloorE1, borderE1, gridE1);
-            Elevator E2 = new MidElevator(lblE2, lblFloorE2, borderE2, gridE2);
-            Elevator E3 = new PenthouseElevator(lblE3, lblFloorE3, borderE3, gridE3);
-            Elevator E4 = new PenthouseElevator(lblE4, lblFloorE4, borderE4, gridE4);
-            Elevator E5 = new MidElevator(lblE5, lblFloorE5, borderE5, gridE5);
-            Elevator E6 = new LowElevator(lblE6, lblFloorE6, borderE6, gridE6);
+            ElevatorDLL E1 = new LowElevatorDLL(lblE1, lblFloorE1, lblCapacityE1, borderE1, gridE1, 0, 0, 0, 0, 0, 0);
+            ElevatorDLL E2 = new MidElevatorDLL(lblE2, lblFloorE2, lblCapacityE2, borderE2, gridE2, 0, 0, 0, 0, 0, 0);
+            ElevatorDLL E3 = new PenthouseElevatorDLL(lblE3, lblFloorE3, lblCapacityE3, borderE3, gridE3, 0, 0, 0, 0, 0, 0);
+            ElevatorDLL E4 = new PenthouseElevatorDLL(lblE4, lblFloorE4, lblCapacityE4, borderE4, gridE4, 0, 0, 0, 0, 0, 0);
+            ElevatorDLL E5 = new MidElevatorDLL(lblE5, lblFloorE5, lblCapacityE5, borderE5, gridE5, 0, 0, 0, 0, 0, 0);
+            ElevatorDLL E6 = new LowElevatorDLL(lblE6, lblFloorE6, lblCapacityE6, borderE6, gridE6, 0, 0, 0, 0, 0, 0);
 
-            Grid.SetRow(E1.Border, Grid.GetRow(E1.Border) - 1);
-            E1.Floor.Content = "Floor 1";
+            //Grid.SetRow(E1.Border, Grid.GetRow(E1.Border));
+            //E1.Floor.Content = "Floor 1";
+
         }
     }
 }
