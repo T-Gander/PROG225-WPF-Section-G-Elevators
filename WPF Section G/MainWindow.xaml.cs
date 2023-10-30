@@ -24,7 +24,15 @@ namespace WPF_Section_G
         {
             InitializeComponent();
 
-            Elevator E1 = new Elevator()
+            Elevator E1 = new LowElevator(lblE1, lblFloorE1, borderE1, gridE1);
+            Elevator E2 = new MidElevator(lblE2, lblFloorE2, borderE2, gridE2);
+            Elevator E3 = new PenthouseElevator(lblE3, lblFloorE3, borderE3, gridE3);
+            Elevator E4 = new PenthouseElevator(lblE4, lblFloorE4, borderE4, gridE4);
+            Elevator E5 = new MidElevator(lblE5, lblFloorE5, borderE5, gridE5);
+            Elevator E6 = new LowElevator(lblE6, lblFloorE6, borderE6, gridE6);
+
+            Grid.SetRow(E1.Border, Grid.GetRow(E1.Border) - 1);
+            E1.Floor.Content = "Floor 1";
         }
     }
 }

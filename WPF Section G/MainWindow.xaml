@@ -67,8 +67,11 @@
         <!-- Elevator 1-->
         <Border x:Name="borderE1" Grid.Row="12" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
             <Grid x:Name="gridE1" Background="Yellow" >
-                <Label x:Name="lblE1" Content="E1" HorizontalAlignment="Center" />
-                <Label x:Name="lblFloorE1" Content="Ground Floor" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                <StackPanel>
+                    <Label x:Name="lblE1" Content="E1" HorizontalAlignment="Center" FontSize="10"  Padding="2"/>
+                    <Label x:Name="lblFloorE1" Content="Ground Floor" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                    <Label x:Name="lblCapacityE1" Content="Capacity: 0/10" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                </StackPanel>
             </Grid>
 
         </Border>
@@ -76,40 +79,55 @@
         <!-- Elevator 2-->
         <Border x:Name="borderE2" Grid.Row="12" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
             <Grid x:Name="gridE2" Background="Yellow" >
-                <Label x:Name="lblE2" Content="E2" HorizontalAlignment="Center" />
-                <Label x:Name="lblFloor2" Content="Ground Floor" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                <StackPanel>
+                    <Label x:Name="lblE2" Content="E2" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                    <Label x:Name="lblFloorE2" Content="Ground Floor" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                    <Label x:Name="lblCapacityE2" Content="Capacity: 0/10" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                </StackPanel>
             </Grid>
         </Border>
 
         <!-- Elevator 3-->
         <Border x:Name="borderE3" Grid.Row="12" Grid.Column="6" BorderBrush="Black" BorderThickness="1">
             <Grid x:Name="gridE3" Background="Yellow" >
-                <Label x:Name="lblE3" Content="E3" HorizontalAlignment="Center" />
-                <Label x:Name="lblFloorE3" Content="Ground Floor" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                <StackPanel>
+                    <Label x:Name="lblE3" Content="E3" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                    <Label x:Name="lblFloorE3" Content="Ground Floor" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                    <Label x:Name="lblCapacityE3" Content="Capacity: 0/10" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                </StackPanel>
             </Grid>
         </Border>
 
         <!-- Elevator 4-->
         <Border x:Name="borderE4" Grid.Row="12" Grid.Column="7" BorderBrush="Black" BorderThickness="1">
             <Grid x:Name="gridE4" Background="Yellow" >
-                <Label x:Name="lblE4" Content="E4" HorizontalAlignment="Center" />
-                <Label x:Name="lblFloorE4" Content="Ground Floor" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                <StackPanel>
+                    <Label x:Name="lblE4" Content="E4" HorizontalAlignment="Center"  FontSize="10" Padding="2"/>
+                    <Label x:Name="lblFloorE4" Content="Ground Floor" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                    <Label x:Name="lblCapacityE4" Content="Capacity: 0/10" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                </StackPanel>
             </Grid>
         </Border>
 
         <!-- Elevator 5-->
         <Border x:Name="borderE5" Grid.Row="12" Grid.Column="9" BorderBrush="Black" BorderThickness="1">
             <Grid x:Name="gridE5" Background="Yellow" >
-                <Label x:Name="lblE5" Content="E5" HorizontalAlignment="Center" />
-                <Label x:Name="lblFloorE5" Content="Ground Floor" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                <StackPanel>
+                    <Label x:Name="lblE5" Content="E5" HorizontalAlignment="Center"  FontSize="10" Padding="2"/>
+                    <Label x:Name="lblFloorE5" Content="Ground Floor" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                    <Label x:Name="lblCapacityE5" Content="Capacity: 0/10" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                </StackPanel>
             </Grid>
         </Border>
 
         <!-- Elevator 6-->
         <Border x:Name="borderE6" Grid.Row="12" Grid.Column="11" BorderBrush="Black" BorderThickness="1">
             <Grid x:Name="gridE6" Background="Yellow" >
-                <Label x:Name="lblE6" Content="E6" HorizontalAlignment="Center" />
-                <Label x:Name="lblFloorE6" Content="Ground Floor" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                <StackPanel>
+                    <Label x:Name="lblE6" Content="E6" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                    <Label x:Name="lblFloorE6" Content="Ground Floor" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                    <Label x:Name="lblCapacityE6" Content="Capacity: 0/10" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
+                </StackPanel>
             </Grid>
         </Border>
 
