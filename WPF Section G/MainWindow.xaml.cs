@@ -36,8 +36,7 @@ namespace WPF_Section_G
             ElevatorDLL E5 = new MidElevatorDLL(lblE5, lblFloorE5, lblCapacityE5, borderE5, gridE5, 0, 0, 0, 0, 0, 0);
             ElevatorDLL E6 = new LowElevatorDLL(lblE6, lblFloorE6, lblCapacityE6, borderE6, gridE6, 0, 0, 0, 0, 0, 0);
 
-            //Grid.SetRow(E1.Border, Grid.GetRow(E1.Border));
-            //E1.Floor.Content = "Floor 1";
+            //I'm sorry! This would have been a pain to do with WPF using x and y coords, I wanted to experiment with grid.
 
             Timer HeartbeatTimer = new Timer();
             HeartbeatTimer.Interval = 300;
