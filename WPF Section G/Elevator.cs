@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
@@ -21,19 +23,20 @@ namespace Section_G_Lab_Elevator
         public Label Capacity { get; set; }
         protected int ElevatorSpeed { get; set; }
         protected enum Floors { Ground, Level1, Level2, Level3, Level4, Level5, Level6, Level7, Level8, Level9, Level10, Penthouse };
-        protected enum Doors { Open, Closing, Closed }
+        protected enum Doors { Open, Opening, Closing, Closed }
 
         protected Floors MAXFLOOR;
         protected Floors Location;
         protected Floors Destination;
         protected Doors DoorState = Doors.Open;
-        protected bool hasDestination = false;
+        
         const int MAXCAPACITY = 10;
+
+        protected int currentWaitTime = 0;
         protected int occupants = 0;
         protected int occupantsWaiting = 0;
+
         protected bool loadingOccupants = false;
-        protected bool unLoadingOccupants = false;
-        protected int waitTimeForNextDestination = 1000;
 
         internal ElevatorDLL(Label name, Label floorLabel, Label capacityLabel, Border border, Grid grid, int x, int y, int lobby, int penthouse, int distance, int interval) : base(x,y, lobby, penthouse, distance, interval)
         {
@@ -42,6 +45,7 @@ namespace Section_G_Lab_Elevator
             Name = name;
             Floor = floorLabel;
             Location = Floors.Ground;
+            Capacity = capacityLabel;
             MainWindow.Heartbeat += CheckState;
             MainWindow.Heartbeat += UpdateFloorLabel;
             MainWindow.Heartbeat += UpdateCapacity;
@@ -49,32 +53,103 @@ namespace Section_G_Lab_Elevator
 
         protected void FillElevator()
         {
-            if (occupantsWaiting == 0) loadingOccupants = false;
-            else occupantsWaiting--; occupants++;
+            occupantsWaiting--;
+            occupants++;
         }
 
         protected void EmptyElevator()
         {
-            occupants--;
+            Random rnd = new Random();
+            
+            occupants -= rnd.Next(4);
+
+            if(occupants < 0) occupants = 0;
         }
+
         protected void UpdateVisualLocation(int direction)
         {
-            Grid.SetRow(Border, Grid.GetRow(Border) + direction);
+                Grid.SetRow(Border, Grid.GetRow(Border) - direction);
         }
 
         protected void CheckState()
         {
-            if (loadingOccupants)
+            //Check doors are open or closed
+
+            //If doors are open
+
+            //Check current occupants against waiting occupants
+
+            //If waiting occupants is 0, close doors.
+
+            //Once doors are closed, Get assigned a floor to drop occupants at.
+
+            //If elevator isn't at the destination floor, move to the next floor
+
+            //If elevator is at destination, begin opening doors.
+
+            //once doors are open, drop occupants
+
+            switch (DoorState)
             {
-                FillElevator();
-            }
-            else if (Location != Destination)
-            {
-                MoveToDestinationFloor();
-            }
-            else if (unLoadingOccupants)
-            {
-                if (occupants != 0) EmptyElevator();
+                case Doors.Open:
+                    if (loadingOccupants)
+                    {
+                        if(occupants == MAXCAPACITY || occupantsWaiting > 0 && Destination != Floors.Ground)
+                        {
+                            FillElevator();
+                        }
+                        else
+                        {
+                            loadingOccupants = false;
+                            DoorState = Doors.Closing;
+                        }
+                    }
+                    else
+                    {
+                        if (occupants > 0) EmptyElevator();
+                        else
+                        {
+                            if (currentWaitTime != ElevatorSpeed) 
+                            { 
+                                currentWaitTime++;
+                                break;
+                            }
+                            
+                            currentWaitTime = 0;
+                            occupants = SetRandomOccupantsWaiting();
+                            Destination = GenerateRandomFloor();
+                            loadingOccupants = true;
+                        }
+                    }
+                    //Check if unloading or loading, then check capacity.
+                    //Once the elevator is either full, or empty. Then begin unloading or loading elevator.
+                    //Then start closing doors
+                    break;
+
+                case Doors.Closing:
+                    if (currentWaitTime != ElevatorSpeed) currentWaitTime++;
+                    else
+                    {
+                        DoorState = Doors.Closed;
+                        currentWaitTime = 0;
+                    }
+                    break;
+
+                case Doors.Closed:
+                    if (Location == Destination) DoorState = Doors.Opening;
+                    else MoveToDestinationFloor();
+                    break;
+
+                case Doors.Opening:
+                    if (currentWaitTime != ElevatorSpeed) currentWaitTime++;
+                    else
+                    {
+                        DoorState = Doors.Open;
+                        currentWaitTime = 0;
+                    }
+                    //Once doors are starting to open, keep opening.
+                    //Once doors are completely open, start emptying elevator setting unloading to true.
+                    break;
             }
         }
 
@@ -90,7 +165,6 @@ namespace Section_G_Lab_Elevator
                 Location++;
                 UpdateVisualLocation(1);
             }
-            else unLoadingOccupants = true;
         }
 
         protected void UpdateFloorLabel()
@@ -135,31 +209,41 @@ namespace Section_G_Lab_Elevator
             }
         }
 
-        protected int SetOccupantsWaiting()
-        {
-            Random rWaiting = new Random();
-            occupantsWaiting = rWaiting.Next(MAXCAPACITY);
-            if (occupantsWaiting == 0) loadingOccupants = false;
-            return occupantsWaiting;
-        }
-
-        protected int AddOccupants()
+        protected int SetRandomOccupantsWaiting()
         {
             Random rWaiting = new Random();
 
-            return rWaiting.Next(MAXCAPACITY);
+            if(Location != Floors.Ground)
+            {
+                Random coinFlip = new Random();
+
+                int flip = coinFlip.Next(2);
+
+                if (flip == 0)
+                {
+                    return 0;
+                }
+            }
+            
+            return rWaiting.Next(MAXCAPACITY); ;
         }
 
         protected Floors GenerateRandomFloor()
         {
-            Random rnd = new Random();
-
-            return (Floors)rnd.Next(11);
+            if(Location == Floors.Ground)
+            {
+                Random rnd = new Random();
+                return (Floors)rnd.Next((int)MAXFLOOR + 1);
+            }
+            else
+            {
+                return Floors.Ground;
+            }
         }
 
         protected void UpdateCapacity()
         {
-            Capacity.Content = $"Capacity: {occupants}/{MAXCAPACITY}";
+                Capacity.Content = $"Capacity: {occupants}/{MAXCAPACITY}";
         }
     }
 

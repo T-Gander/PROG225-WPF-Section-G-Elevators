@@ -40,7 +40,7 @@ namespace WPF_Section_G
             //E1.Floor.Content = "Floor 1";
 
             Timer HeartbeatTimer = new Timer();
-            HeartbeatTimer.Interval = 1000;
+            HeartbeatTimer.Interval = 300;
             HeartbeatTimer.Enabled = true;
             HeartbeatTimer.Elapsed += HeartbeatTimer_Elapsed;
         }
@@ -49,7 +49,7 @@ namespace WPF_Section_G
         {
             if(Heartbeat != null)
             {
-                Heartbeat.Invoke();
+                Application.Current.Dispatcher.Invoke(Heartbeat);    //Had to use this way of invoking to use the UI thread in WPF.
             }
         }
     }
