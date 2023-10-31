@@ -39,7 +39,7 @@ namespace WPF_Section_G
             //I'm sorry! This would have been a pain to do with WPF using x and y coords, I wanted to experiment with grid.
 
             Timer HeartbeatTimer = new Timer();
-            HeartbeatTimer.Interval = 300;
+            HeartbeatTimer.Interval = 100;
             HeartbeatTimer.Enabled = true;
             HeartbeatTimer.Elapsed += HeartbeatTimer_Elapsed;
         }

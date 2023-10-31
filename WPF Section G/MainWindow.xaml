@@ -61,9 +61,6 @@
         <Grid Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" Background="Gray" />
         <Grid Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2" Background="Gray" />
         
-        
-        
-
         <!-- Elevator 1-->
         <Border x:Name="borderE1" Grid.Row="12" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
             <Grid x:Name="gridE1" Background="Yellow" >
@@ -122,7 +119,7 @@
 
         <!-- Elevator 6-->
         <Border x:Name="borderE6" Grid.Row="12" Grid.Column="11" BorderBrush="Black" BorderThickness="1">
-            <Grid x:Name="gridE6" Background="Yellow" >
+            <Grid x:Name="gridE6" Background="Yellow">
                 <StackPanel>
                     <Label x:Name="lblE6" Content="E6" HorizontalAlignment="Center" FontSize="10" Padding="2"/>
                     <Label x:Name="lblFloorE6" Content="Ground Floor" HorizontalAlignment="Center" FontSize="10" Padding="2"/>

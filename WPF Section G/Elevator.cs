@@ -49,12 +49,33 @@ namespace Section_G_Lab_Elevator
             MainWindow.Heartbeat += CheckState;
             MainWindow.Heartbeat += UpdateFloorLabel;
             MainWindow.Heartbeat += UpdateCapacity;
+            MainWindow.Heartbeat += UpdateVisualDoors;
         }
 
         protected void FillElevator()
         {
             occupantsWaiting--;
             occupants++;
+        }
+
+        protected void UpdateVisualDoors()
+        {
+            double maxMargin = 50;
+
+            double newMargin;
+
+            switch (DoorState)
+            {
+                case Doors.Opening:
+                    newMargin = maxMargin - ((double)currentWaitTime / (double)ElevatorSpeed * maxMargin);
+                    Grid.Margin = new Thickness(newMargin, 0, newMargin, 0);
+                    break;
+
+                case Doors.Closing:
+                    newMargin = ((double)currentWaitTime / (double)ElevatorSpeed * maxMargin);
+                    Grid.Margin = new Thickness(newMargin, 0, newMargin, 0);
+                    break;
+            }
         }
 
         protected void EmptyElevator()
@@ -68,7 +89,7 @@ namespace Section_G_Lab_Elevator
 
         protected void UpdateVisualLocation(int direction)
         {
-                Grid.SetRow(Border, Grid.GetRow(Border) - direction);
+            Grid.SetRow(Border, Grid.GetRow(Border) - direction);
         }
 
         protected void CheckState()
@@ -127,7 +148,11 @@ namespace Section_G_Lab_Elevator
                     break;
 
                 case Doors.Closing:
-                    if (currentWaitTime != ElevatorSpeed) currentWaitTime++;
+                    if (currentWaitTime != ElevatorSpeed)
+                    {
+                        //UpdateVisualDoors();
+                        currentWaitTime++;
+                    }
                     else
                     {
                         DoorState = Doors.Closed;
@@ -141,7 +166,11 @@ namespace Section_G_Lab_Elevator
                     break;
 
                 case Doors.Opening:
-                    if (currentWaitTime != ElevatorSpeed) currentWaitTime++;
+                    if (currentWaitTime != ElevatorSpeed)
+                    {
+                        //UpdateVisualDoors();
+                        currentWaitTime++;
+                    }
                     else
                     {
                         DoorState = Doors.Open;
@@ -217,9 +246,9 @@ namespace Section_G_Lab_Elevator
             {
                 Random coinFlip = new Random();
 
-                int flip = coinFlip.Next(2);
+                int flip = coinFlip.Next(3);
 
-                if (flip == 0)
+                if (flip <= 1)
                 {
                     return 0;
                 }
@@ -233,7 +262,7 @@ namespace Section_G_Lab_Elevator
             if(Location == Floors.Ground)
             {
                 Random rnd = new Random();
-                return (Floors)rnd.Next((int)MAXFLOOR + 1);
+                return (Floors)rnd.Next(1,(int)MAXFLOOR + 1);
             }
             else
             {
@@ -252,7 +281,7 @@ namespace Section_G_Lab_Elevator
         public LowElevatorDLL(Label name, Label floorLabel, Label capacityLabel, Border border, Grid grid, int x, int y, int lobby, int penthouse, int distance, int interval) : base(name, floorLabel, capacityLabel, border, grid, x, y, lobby, penthouse, distance, interval)
         {
             MAXFLOOR = Floors.Level3;
-            ElevatorSpeed = 5;
+            ElevatorSpeed = 50;
         }
     }
 
@@ -261,7 +290,7 @@ namespace Section_G_Lab_Elevator
         public MidElevatorDLL(Label name, Label floorLabel, Label capacityLabel, Border border, Grid grid, int x, int y, int lobby, int penthouse, int distance, int interval) : base(name, floorLabel, capacityLabel, border, grid, x, y, lobby, penthouse, distance, interval)
         {
             MAXFLOOR = Floors.Level6;
-            ElevatorSpeed = 4;
+            ElevatorSpeed = 40;
         }
     }
 
@@ -270,7 +299,7 @@ namespace Section_G_Lab_Elevator
         public PenthouseElevatorDLL(Label name, Label floorLabel, Label capacityLabel, Border border, Grid grid, int x, int y, int lobby, int penthouse, int distance, int interval) : base(name, floorLabel, capacityLabel, border, grid, x, y, lobby, penthouse, distance, interval)
         {
             MAXFLOOR = Floors.Penthouse;
-            ElevatorSpeed = 3;
+            ElevatorSpeed = 30;
         }
     }
 }
