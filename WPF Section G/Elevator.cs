@@ -21,7 +21,7 @@ namespace Section_G_Lab_Elevator
         public Label Name { get; set; }
         public Label Floor { get; set; }
         public Label Capacity { get; set; }
-        protected int ElevatorSpeed { get; set; }
+        protected int WarmupTime { get; set; }
         protected enum Floors { Ground, Level1, Level2, Level3, Level4, Level5, Level6, Level7, Level8, Level9, Level10, Penthouse };
         protected enum Doors { Open, Opening, Closing, Closed }
 
@@ -60,19 +60,19 @@ namespace Section_G_Lab_Elevator
 
         protected void UpdateVisualDoors()
         {
-            double maxMargin = 50;
+            double maxMargin = 150;
 
             double newMargin;
 
             switch (DoorState)
             {
                 case Doors.Opening:
-                    newMargin = maxMargin - ((double)currentWaitTime / (double)ElevatorSpeed * maxMargin);
+                    newMargin = maxMargin - ((double)currentWaitTime / (double)WarmupTime * maxMargin);
                     Grid.Margin = new Thickness(newMargin, 0, newMargin, 0);
                     break;
 
                 case Doors.Closing:
-                    newMargin = ((double)currentWaitTime / (double)ElevatorSpeed * maxMargin);
+                    newMargin = ((double)currentWaitTime / (double)WarmupTime * maxMargin);
                     Grid.Margin = new Thickness(newMargin, 0, newMargin, 0);
                     break;
             }
@@ -115,7 +115,7 @@ namespace Section_G_Lab_Elevator
                 case Doors.Open:
                     if (loadingOccupants)
                     {
-                        if(occupants == MAXCAPACITY || occupantsWaiting > 0 && Destination != Floors.Ground)
+                        if(occupants != MAXCAPACITY && occupantsWaiting > 0)
                         {
                             FillElevator();
                         }
@@ -130,7 +130,7 @@ namespace Section_G_Lab_Elevator
                         if (occupants > 0) EmptyElevator();
                         else
                         {
-                            if (currentWaitTime != ElevatorSpeed) 
+                            if (currentWaitTime != WarmupTime) 
                             { 
                                 currentWaitTime++;
                                 break;
@@ -148,7 +148,7 @@ namespace Section_G_Lab_Elevator
                     break;
 
                 case Doors.Closing:
-                    if (currentWaitTime != ElevatorSpeed)
+                    if (currentWaitTime != WarmupTime)
                     {
                         //UpdateVisualDoors();
                         currentWaitTime++;
@@ -166,7 +166,7 @@ namespace Section_G_Lab_Elevator
                     break;
 
                 case Doors.Opening:
-                    if (currentWaitTime != ElevatorSpeed)
+                    if (currentWaitTime != WarmupTime)
                     {
                         //UpdateVisualDoors();
                         currentWaitTime++;
@@ -254,7 +254,7 @@ namespace Section_G_Lab_Elevator
                 }
             }
             
-            return rWaiting.Next(MAXCAPACITY); ;
+            return rWaiting.Next(1, MAXCAPACITY+1); ;
         }
 
         protected Floors GenerateRandomFloor()
@@ -281,7 +281,7 @@ namespace Section_G_Lab_Elevator
         public LowElevatorDLL(Label name, Label floorLabel, Label capacityLabel, Border border, Grid grid, int x, int y, int lobby, int penthouse, int distance, int interval) : base(name, floorLabel, capacityLabel, border, grid, x, y, lobby, penthouse, distance, interval)
         {
             MAXFLOOR = Floors.Level3;
-            ElevatorSpeed = 50;
+            WarmupTime = 50;
         }
     }
 
@@ -290,7 +290,7 @@ namespace Section_G_Lab_Elevator
         public MidElevatorDLL(Label name, Label floorLabel, Label capacityLabel, Border border, Grid grid, int x, int y, int lobby, int penthouse, int distance, int interval) : base(name, floorLabel, capacityLabel, border, grid, x, y, lobby, penthouse, distance, interval)
         {
             MAXFLOOR = Floors.Level6;
-            ElevatorSpeed = 40;
+            WarmupTime = 40;
         }
     }
 
@@ -299,7 +299,7 @@ namespace Section_G_Lab_Elevator
         public PenthouseElevatorDLL(Label name, Label floorLabel, Label capacityLabel, Border border, Grid grid, int x, int y, int lobby, int penthouse, int distance, int interval) : base(name, floorLabel, capacityLabel, border, grid, x, y, lobby, penthouse, distance, interval)
         {
             MAXFLOOR = Floors.Penthouse;
-            ElevatorSpeed = 30;
+            WarmupTime = 30;
         }
     }
 }
